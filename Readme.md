@@ -5,7 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Service Data Formatter</title>
     <style>
-        /* Your styles here */
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
     </style>
 </head>
 <body>
@@ -17,7 +30,7 @@
         <textarea id="serviceData" rows="10" placeholder="Enter Service Data here..."></textarea>
         <button id="formatButton">Format Data</button>
         <h2>Formatted Data:</h2>
-        <textarea id="formattedData" rows="10" readonly></textarea>
+        <div id="formattedData"></div>
         <button id="copyButton">Copy to Clipboard</button>
     </div>
 
@@ -29,20 +42,40 @@
         });
 
         document.getElementById('copyButton').addEventListener('click', function () {
-            const formattedData = document.getElementById('formattedData').value;
+            const formattedData = document.getElementById('formattedData').innerHTML;
             copyToClipboard(formattedData);
         });
 
         function formatData(input) {
             const lines = input.split('\n').map(line => line.trim());
-            const headers = "WIP\tWL Date in\tRegistn\tCSC\tCustomer name\tModel code\tS\tRTS\tTYP\tWL Str Dte\tTime\tCount\tDate due in\tFree text";
-            const formattedLines = lines.map(line => line.replace(/\t/g, '').replace(/\s+/g, '\t'));
-            return headers + '\n' + formattedLines.join('\n');
+            const headers = ["WIP", "WL Date in", "Registn", "CSC", "Customer name", "Model code", "S", "RTS", "TYP", "WL Str Dte", "Time", "Count", "Date due in", "Free text"];
+            const formattedLines = lines.map(line => line.split(/\s{2,}/));
+            return { headers, rows: formattedLines };
         }
 
         function displayFormattedData(formattedData) {
-            const formattedDataTextarea = document.getElementById('formattedData');
-            formattedDataTextarea.value = formattedData;
+            const table = document.createElement('table');
+
+            // Add headers
+            const headerRow = table.insertRow();
+            formattedData.headers.forEach(header => {
+                const th = document.createElement('th');
+                th.textContent = header;
+                headerRow.appendChild(th);
+            });
+
+            // Add rows
+            formattedData.rows.forEach(rowData => {
+                const row = table.insertRow();
+                rowData.forEach(cellData => {
+                    const cell = row.insertCell();
+                    cell.textContent = cellData;
+                });
+            });
+
+            const formattedDataDiv = document.getElementById('formattedData');
+            formattedDataDiv.innerHTML = '';
+            formattedDataDiv.appendChild(table);
         }
 
         function copyToClipboard(text) {
