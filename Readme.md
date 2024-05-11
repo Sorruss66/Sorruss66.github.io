@@ -1,4 +1,4 @@
-Preparey By Zaidi
+Prepared By Zaidi (Data Analyst CCB)
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -71,7 +71,7 @@ Preparey By Zaidi
     <div class="container">
         <label for="jsonInput">Enter Data:</label>
         <textarea id="jsonInput" rows="10" placeholder="Enter Data here..."></textarea>
-        <button id="formatButton">Format JSON</button>
+        <button id="formatButton">Click Here to Continue</button>
         <h2>Formatted Data:</h2>
         <textarea id="formattedJSON" rows="10" readonly></textarea>
     </div>
