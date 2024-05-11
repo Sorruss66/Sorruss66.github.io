@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+Preparey By Zaidi
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JSON Formatter</title>
+    <title>CB5 Formatter </title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -66,13 +66,13 @@
 </head>
 <body>
     <header>
-        <h1>JSON Formatter</h1>
+        <h1>CB5 Formatter</h1>
     </header>
     <div class="container">
-        <label for="jsonInput">Enter JSON:</label>
-        <textarea id="jsonInput" rows="10" placeholder="Enter JSON here..."></textarea>
+        <label for="jsonInput">Enter Data:</label>
+        <textarea id="jsonInput" rows="10" placeholder="Enter Data here..."></textarea>
         <button id="formatButton">Format JSON</button>
-        <h2>Formatted JSON:</h2>
+        <h2>Formatted Data:</h2>
         <textarea id="formattedJSON" rows="10" readonly></textarea>
     </div>
 
