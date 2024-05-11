@@ -1,87 +1,68 @@
-<!DOCTYPE html>
+Try2
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Service Data Formatter</title>
+    <title>Data Formatter</title>
     <style>
-        table {
-            border-collapse: collapse;
-            width: 100%;
-        }
-
-        th, td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align: left;
-        }
-
-        th {
-            background-color: #f2f2f2;
-        }
+        /* Your styles here */
     </style>
 </head>
 <body>
     <header>
-        <h1>Service Data Formatter</h1>
+        <h1>Data Formatter</h1>
     </header>
     <div class="container">
-        <label for="serviceData">Enter Service Data:</label>
-        <textarea id="serviceData" rows="10" placeholder="Enter Service Data here..."></textarea>
+        <label for="dataInput">Enter Data:</label>
+        <textarea id="dataInput" rows="10" placeholder="Enter data here..."></textarea>
         <button id="formatButton">Format Data</button>
         <h2>Formatted Data:</h2>
-        <div id="formattedData"></div>
+        <textarea id="formattedData" rows="10" readonly></textarea>
         <button id="copyButton">Copy to Clipboard</button>
     </div>
 
     <script>
         document.getElementById('formatButton').addEventListener('click', function () {
-            const input = document.getElementById('serviceData').value;
-            const formattedData = formatData(input);
+            const inputData = document.getElementById('dataInput').value;
+            const formattedData = formatData(inputData);
             displayFormattedData(formattedData);
         });
 
         document.getElementById('copyButton').addEventListener('click', function () {
-            const formattedData = document.getElementById('formattedData').innerHTML;
+            const formattedData = document.getElementById('formattedData').value;
             copyToClipboard(formattedData);
         });
 
-        function formatData(input) {
-            const lines = input.split('\n').map(line => line.trim());
-            const headers = ["WIP", "WL Date in", "Registn", "CSC", "Customer name", "Model code", "S", "RTS", "TYP", "WL Str Dte", "Time", "Count", "Date due in", "Free text"];
-            const formattedLines = lines.map(line => line.split(/\s{2,}/));
-            return { headers, rows: formattedLines };
+        function formatData(inputData) {
+            // Split the input into lines
+            const lines = inputData.split('\n');
+            // Process each line
+            const formattedLines = lines.map(line => {
+                // Split the line by tabs
+                const cells = line.split('\t');
+                // Perform transformations on cells as needed
+                const transformedCells = [
+                    cells[0], // WIP
+                    cells[1], // WL Date in
+                    cells[2].trim(), // Registn
+                    // Add other transformations for each cell here
+                ];
+                // Join the transformed cells with tabs
+                return transformedCells.join('\t');
+            });
+            // Join the formatted lines with line breaks
+            return formattedLines.join('\n');
         }
 
         function displayFormattedData(formattedData) {
-            const table = document.createElement('table');
-
-            // Add headers
-            const headerRow = table.insertRow();
-            formattedData.headers.forEach(header => {
-                const th = document.createElement('th');
-                th.textContent = header;
-                headerRow.appendChild(th);
-            });
-
-            // Add rows
-            formattedData.rows.forEach(rowData => {
-                const row = table.insertRow();
-                rowData.forEach(cellData => {
-                    const cell = row.insertCell();
-                    cell.textContent = cellData;
-                });
-            });
-
-            const formattedDataDiv = document.getElementById('formattedData');
-            formattedDataDiv.innerHTML = '';
-            formattedDataDiv.appendChild(table);
+            const formattedDataTextarea = document.getElementById('formattedData');
+            formattedDataTextarea.value = formattedData;
         }
 
         function copyToClipboard(text) {
             const textarea = document.createElement('textarea');
             textarea.textContent = text;
-            document.body.append(textarea);
+            document.body.appendChild(textarea);
             textarea.select();
             document.execCommand('copy');
             document.body.removeChild(textarea);
