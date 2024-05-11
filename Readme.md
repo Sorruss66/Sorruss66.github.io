@@ -1,72 +1,100 @@
-Try2
+Prepared By Zaidi (Data Analyst CCB)
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Data Formatter</title>
+    <title>CB5 Formatter </title>
     <style>
-        /* Your styles here */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #0078d4;
+            color: #fff;
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        h1 {
+            font-size: 36px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            resize: vertical;
+        }
+
+        button {
+            background-color: #0078d4;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #005a9e;
+        }
+
+        h2 {
+            font-size: 24px;
+            margin-top: 20px;
+        }
+
+        #formattedJSON {
+            min-height: 100px;
+        }
     </style>
 </head>
 <body>
     <header>
-        <h1>Data Formatter</h1>
+        <h1>CB5 Formatter</h1>
     </header>
     <div class="container">
-        <label for="dataInput">Enter Data:</label>
-        <textarea id="dataInput" rows="10" placeholder="Enter data here..."></textarea>
-        <button id="formatButton">Format Data</button>
+        <label for="jsonInput">Enter Data:</label>
+        <textarea id="jsonInput" rows="10" placeholder="Enter Data here..."></textarea>
+        <button id="formatButton">Click Here to Continue</button>
         <h2>Formatted Data:</h2>
-        <textarea id="formattedData" rows="10" readonly></textarea>
-        <button id="copyButton">Copy to Clipboard</button>
+        <textarea id="formattedJSON" rows="10" readonly></textarea>
     </div>
 
     <script>
         document.getElementById('formatButton').addEventListener('click', function () {
-            const inputData = document.getElementById('dataInput').value;
-            const formattedData = formatData(inputData);
-            displayFormattedData(formattedData);
+            const inputJSON = document.getElementById('jsonInput').value;
+            const formattedJSON = formatJSON(inputJSON);
+            displayFormattedJSON(formattedJSON);
         });
 
-        document.getElementById('copyButton').addEventListener('click', function () {
-            const formattedData = document.getElementById('formattedData').value;
-            copyToClipboard(formattedData);
-        });
-
-        function formatData(inputData) {
-            // Split the input into lines
-            const lines = inputData.split('\n');
-            // Process each line
-            const formattedLines = lines.map(line => {
-                // Split the line by tabs
-                const cells = line.split('\t');
-                // Perform transformations on cells as needed
-                const transformedCells = [
-                    cells[0], // WIP
-                    cells[1], // WL Date in
-                    cells[2].trim(), // Registn
-                    // Add other transformations for each cell here
-                ];
-                // Join the transformed cells with tabs
-                return transformedCells.join('\t');
-            });
-            // Join the formatted lines with line breaks
-            return formattedLines.join('\n');
+        function formatJSON(inputJSON) {
+            try {
+                const parsedJSON = JSON.parse(inputJSON);
+                return JSON.stringify(parsedJSON, null, 2);
+            } catch (error) {
+                return "Invalid JSON!";
+            }
         }
 
-        function displayFormattedData(formattedData) {
-            const formattedDataTextarea = document.getElementById('formattedData');
-            formattedDataTextarea.value = formattedData;
-        }
-
-        function copyToClipboard(text) {
-            const textarea = document.createElement('textarea');
-            textarea.textContent = text;
-            document.body.appendChild(textarea);
-            textarea.select();
-            document.execCommand('copy');
-            document.body.removeChild(textarea);
-            alert('Formatted data copied to clipboard');
+        function displayFormattedJSON(formattedJSON) {
+            const formattedJSONTextarea = document.getElementById('formattedJSON');
+            formattedJSONTextarea.value = formattedJSON;
         }
     </script>
 </body>
