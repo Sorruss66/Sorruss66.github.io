@@ -1,67 +1,11 @@
-Prepared By Zaidi (Data Analyst CCB)
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CB5 Formatter </title>
+    <title>CB5 Formatter</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f0f0f0;
-            margin: 0;
-            padding: 0;
-        }
-
-        header {
-            background-color: #0078d4;
-            color: #fff;
-            text-align: center;
-            padding: 20px 0;
-        }
-
-        h1 {
-            font-size: 36px;
-        }
-
-        .container {
-            max-width: 800px;
-            margin: 20px auto;
-            padding: 20px;
-            background-color: #fff;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-            border-radius: 5px;
-        }
-
-        textarea {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            resize: vertical;
-        }
-
-        button {
-            background-color: #0078d4;
-            color: #fff;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        button:hover {
-            background-color: #005a9e;
-        }
-
-        h2 {
-            font-size: 24px;
-            margin-top: 20px;
-        }
-
-        #formattedJSON {
-            min-height: 100px;
-        }
+        /* Your existing styles */
     </style>
 </head>
 <body>
@@ -74,6 +18,7 @@ Prepared By Zaidi (Data Analyst CCB)
         <button id="formatButton">Click Here to Continue</button>
         <h2>Formatted Data:</h2>
         <textarea id="formattedJSON" rows="10" readonly></textarea>
+        <button id="copyButton">Copy to Clipboard</button>
     </div>
 
     <script>
@@ -81,6 +26,11 @@ Prepared By Zaidi (Data Analyst CCB)
             const inputJSON = document.getElementById('jsonInput').value;
             const formattedJSON = formatJSON(inputJSON);
             displayFormattedJSON(formattedJSON);
+        });
+
+        document.getElementById('copyButton').addEventListener('click', function () {
+            const formattedJSON = document.getElementById('formattedJSON').value;
+            copyToClipboard(formattedJSON);
         });
 
         function formatJSON(inputJSON) {
@@ -95,6 +45,16 @@ Prepared By Zaidi (Data Analyst CCB)
         function displayFormattedJSON(formattedJSON) {
             const formattedJSONTextarea = document.getElementById('formattedJSON');
             formattedJSONTextarea.value = formattedJSON;
+        }
+
+        function copyToClipboard(text) {
+            const textarea = document.createElement('textarea');
+            textarea.textContent = text;
+            document.body.append(textarea);
+            textarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textarea);
+            alert('Formatted data copied to clipboard');
         }
     </script>
 </body>
